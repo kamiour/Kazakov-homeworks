@@ -1,0 +1,272 @@
+<html>
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+<body>
+    <script>
+        // Добраться до числа 43 и также добраться до 109
+        const first = [ 4, [ 5, 4, 6, [ 5, 1, 109, 3, [ 2, 10, 43, 22, 32 ] ] ] ];
+
+        first[1][3][4][2] //43
+        first[1][3][2] //109
+
+         // Пробежаться через цикл for и если значение меньше 5 то перезаписать его на значение 11 
+         // то есть результат должен быть [ 11, 10, 17, 11, 11 , 11 , 11 ];
+        const zero = [ 4, 10, 17, 2, 3, 1, 0 ];
+
+        for (let i = 0; i < zero.length; i++) {
+            if (zero[i] < 5) {
+                zero[i] = 11;
+            }
+        }
+
+
+        // Пробежаться через цикл for и четные елементы перемножить и записать результат в odd и вывести
+        // то есть перемножить в цикле 4 17 3 10 
+        const multiply = [ 4, 10, 17, 2, 3, 1, 10 ];
+
+        let odd = 1;
+        for (let i = 0; i < multiply.length; i++) {
+            if (i%2 == 0) {
+                odd = odd * multiply[i];
+            }
+        }
+
+        // Вывести только нечетные числа используя цикл: 
+        // - for,
+        // - while 
+        const second = [ 1, 5, 10, 4, 2, 3 ];
+
+        //for:
+        for (let i = 0; i < second.length; i++) {
+            if (second[i]%2 !== 0) {
+                console.log(second[i]);
+            }
+        }
+
+        //while:
+        let j = 0;
+        while (j < second.length) {
+            if (second[j]%2 !== 0) {
+                console.log(second[j]);
+                console.log(j);
+            }
+            j++;
+        }
+       
+        // Найти минимальное значение и вывести
+        const third = [ 10, 2, 4, 43, 5, 3, 19, 23 ];
+
+        let min = third[0];
+        for (let i = 0; i < third.length; i++) {
+            if (third[i] < min) {
+                min = third[i];
+            }
+        }
+        console.log("minimum value is " + min);
+         
+        
+        // Вывести все елементы в цикле for в обратном порядке то есть 28 19 14 9 23 43 3 4
+        const fourth = [ 4, 3, 43, 23, 9, 14, 19, 28 ];
+
+        for (let i = (fourth.length - 1); i >= 0; i--) {
+            console.log(fourth[i]);
+        }
+        
+        // Найти произведение  всех елементов
+        const fifth = [ 9, 14, 19, 28 ];
+
+        let mult = 1;
+        for (let i = 0; i < fifth.length; i++) {
+            mult = mult * fifth[i];
+        };
+        console.log(mult);
+        
+        // Пройтись через цикл for и сложить все числа в массиве и вывести результат!
+        const sixth = [ 9, 4, 19, 18 ];
+
+        let add = 0;
+        for (let i = 0; i < sixth.length; i++) {
+            add = add + sixth[i];
+        };
+        console.log(add);
+
+        
+        // Пройтись через цикл for и найти среднее арифметическое все елементов
+        // среднее арифметическое - это сумма всех елементов, разделенная на их количество!
+        const seventh = [ 2, 0, 3, 29, 23, 19 ];
+
+        let avg = 0;
+        let sum = 0;
+        for (let i = 0; i < seventh.length; i++) {
+            sum = sum + seventh[i];
+        };
+        avg = sum / seventh.length;
+        console.log(avg);
+
+        // Записать в массив eighth числа от 5 до 17 через цикл:
+        // - for,
+        // - while 
+        const eighth = [];
+        
+        // for:
+        let a = 5;
+        let b = 17;
+        for (let i = a, j = 0; i <= b; i++, j++) {
+            eighth[j] = i;
+        };
+        console.log(eighth);
+
+        //while:
+        let a = 5;
+        let b = 17;
+        let i = a;
+        let j = 0;
+        while (i <= b) {
+            eighth[j] = i;
+            i++;
+            j++;
+        }
+        console.log(eighth);
+        
+        // ADVANCED ЗАДАНИЯ!!!! ТО ЕСТЬ НЕОБЯЗАТЕЛЬНЫЕ!!!!!!!!
+
+
+        // Отсортировать массив по возростанию! и вывести не используя sort!
+        const ninth = [ 1, 2, 18, 3, 38, 41, 0 ];
+
+        let sorted = ninth;
+        let min = 0;
+        for (let i = 0; i < sorted.length; i++) {
+            for (let j = i; j < sorted.length; j++) {
+                if (sorted[i] > sorted[j]) {
+                    min = sorted[j];
+                    sorted[j] = sorted[i];
+                    sorted[i] = min;
+                }
+            }
+        }
+        console.log(sorted);
+
+
+        // Есть строкa в переменной tenth!! Нужно пройтись циклом for и записать в переменную res строку со значением 2a1f3c1b
+        // так как если обратить внимание то в строке 'aafcccb' символ а идет последовательно 2 раза далее f только один символ, символ с последовательно 3 раза
+        // и символ b один раз
+        const tenth = 'aafcccb';
+        let res = '';
+
+        let counter = [];
+        let symbols = []; //массив для уникальных символов
+        let k = 0; //переменная для нумерации уникальных символов
+
+        // считаем, сколько раз вслед за символом идет такой же
+        for (let i = 0; i < tenth.length; i++) {
+            counter[k] = 1;
+            symbols[k] = tenth[i];
+
+            while (tenth[i] == tenth[i+1]) {
+                counter[k] = counter[k] + 1;
+                i++;
+            }
+
+            k++;
+        }
+
+        // сохраняем все в res - используем конкатенацию
+        for (let i = 0; i < k; i++) {
+            res = res + `${counter[i]}${symbols[i]}`
+        }
+        console.log(res);
+
+
+
+        // ЗДЕСЬ ЕЩЕ ТЯЖЕЛЕЙ нужно подсчитать количество одинаковых символов в строке и при этом одинаковые символы не идут последовательно!!
+        // то есть результат должен быть 4a3f4c
+        const eleventh = 'aafcccffbaac';
+        let newRes = '';
+
+        let symbols = []; //массив для уникальных символов
+        let k = 0; //переменная для нумерации уникальных символов
+        let counter = [];
+        
+        //Считаю, сколько раз каждая буква встречается. Перебираю от каждой буквы влево - чтобы
+        // к первым буквам counter стал 1 - те буквы, которые встречаются первыми, если читать слева направо - в соответствии
+        // с твоим результатом: 4a3f4c (кстати, я так понял, тут пропущена b, которая встречается 1 раз)
+        for (let i = (eleventh.length - 1); i >= 0; i--) {
+            counter[i] = 1;
+            for (let j = (i - 1); j >= 0; j--) {
+                if (eleventh[i] == eleventh[j])  {
+                    counter[i]++;
+                }
+            };
+        }
+
+        //записываем уникальные символы в массив symbols - буквы, у которых counter 1 - уникальны. Их и записываем. Их количество равно k
+        // k здесь равно 4: a, f, c, b
+        for (let i = 0; i < eleventh.length; i++) {
+            if (counter[i] == 1) {
+                symbols[k] = eleventh[i];
+                k++;
+            };
+        }
+
+        // считаем количество каждого уникального символа в изначальной строке eleventh
+        counter = [];
+        for (let i = 0; i < k; i++) {
+            counter[i] = 0;
+            for (let j = 0; j < eleventh.length; j++) {
+                if (symbols[i] == eleventh[j])  {
+                    counter[i]++;
+                }
+            }
+        }
+
+        // сохраняем все в newRes - используем конкатенацию
+        for (let i = 0; i < k; i++) {
+            newRes = newRes + `${counter[i]}${symbols[i]}`
+        }
+        console.log(newRes);
+
+
+        //ТО ЧТО НИЖЕ Я СДЕЛАЛ В ОТДЕЛЬНОМ ДОКЕ grid.html
+
+        // Тут не для новичков advanced! Нужно еще подобрать любую картинку для каждого языка прогр. и вставить в src!
+        // затем нужно вывести на html страницу картинки и под ними  name и description! 
+        // Блоки должны быть спозиционированы в ряд, если не хватает места то перенос на следующую!
+        // Блоки все должны быть одной ширины и высоты! 
+        const arr = [ 
+                {
+                    id: 1,
+                    name: 'Javascript',
+                    description: 'JavaScript, often abbreviated as JS, is a high-level, interpreted scripting language that conforms to the ECMAScript specification. JavaScript has curly-bracket syntax, dynamic typing, prototype-based object-orientation, and first-class functions.',
+                    src: '',
+                },
+                {
+                    id: 2,
+                    name: 'Python',
+                    description: 'Python is an interpreted, high-level, general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python\'s design philosophy emphasizes code readability with its notable use of significant whitespace.',
+                    src: '',
+                },
+                {
+                    id: 3,
+                    name: 'Php',
+                    description: 'PHP: Hypertext Preprocessor is a general-purpose programming language originally designed for web development. It was originally created by Rasmus Lerdorf in 1994; the PHP reference implementation is now produced by The PHP Group.',
+                    src: '',
+                },
+                {
+                    id: 4,
+                    name: 'Java',
+                    description: 'Java is a general-purpose programming language that is class-based, object-oriented, and designed to have as few implementation dependencies as possible',
+                    src: '',
+                },
+                {
+                    id: 5,
+                    name: 'C++',
+                    description: 'C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes',
+                    src: '',
+                }
+            ]
+        
+    </script>
+</body>
+</html>

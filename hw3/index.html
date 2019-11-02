@@ -1,0 +1,170 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT HW3</title>
+</head>
+
+<body>
+    <form id="form" action="" method="POST">
+        <input id="name" class="form-input" type="text" placeholder="name" autocomplete="on" name="name">
+        <input id="email" class="form-input" type="email" placeholder="email" autocomplete="on" name="email">
+        <input id="password" class="form-input" type="password" placeholder="password" autocomplete="on" name="password">
+        <a href="javascript: submitForm()">SEND</a>
+    </form>
+
+
+    <script>
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Написать функцию которая принимает 2 параметра перемножает и возвращает значение!!!
+        function multiply(a, b) {
+            return a*b;
+        }
+        multiply(5, 10);
+
+
+        // 2) Написать функцию которая принимает 3 параметра и возвращает найменьшее из них
+        function min(a, b, c) {
+            let min = a;
+            if (min > b) {
+                min = b;
+                if (min > c) {
+                    min = c;
+                }
+            }
+            return min;
+        }
+        min(100, 33, 11);
+
+        //3) Написать функцию которая 
+        //  -принимает массив, 
+        //  -сохраняет непарные числа в новый массив, 
+        //  -сортирует массив
+        // - и возвращает отсортированный массив
+        function sortOddNumbers(array) {
+            let sorted = [];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]%2 !== 0) {
+                    sorted[sorted.length] = array[i];
+                }
+            }
+            return sorted.sort(function(a, b){return a-b});
+        }
+        sortOddNumbers([2, 5, 3, 6, 9, 8, 10, 11])
+
+        // 4) Написать функцию котороя принимает массив, и выводит новый массив из тех элементов которые кратны 5!!
+        function multipleOfFive(array) {
+            let arrFive = [];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]%5 == 0) {
+                    arrFive[arrFive.length] = array[i];
+                }
+            }
+            return arrFive;
+        }
+        multipleOfFive([20, 5, 3, 23, 15, 8, 10, 11])
+
+
+        // 5) Написать функцию котороя принимает массив из строк, и возвращает кокатенацию из элементов первые символы которых
+        // совпадают с этой подстрокой 'jitb'. Используем  toLowerCase() и indexOf() методы  !!
+        function matchWithString(array) {
+            const str = 'jitb';
+            let match = [];
+            let arrLower = [];
+            let concat = '';
+            for (let i = 0; i < array.length; i++) {
+                arrLower[i] = array[i].toLowerCase();
+                for (let j = 0; j < str.length; j++) {
+                    if (arrLower[i].indexOf(str[j]) == 0) {
+                        match[match.length] = arrLower[i];
+                    }
+                }
+            }
+            for (let i = 0; i < match.length; i++) {
+                if (i == 0) {
+                    concat = concat + `${match[i]}`;
+                } else {
+                    concat = concat + ` ${match[i]}`;
+                }
+            }
+            return(concat);
+        }
+        matchWithString(['Javascript', 'nice', 'coding', 'is', 'the', 'language', 'Best', 'worst']); // должно вывести javascript is the best
+
+        // 6) Написать функцию котороя принимает строку и возвращает подстроку и количество таких подстрок в строке! 
+        function  sameSubstring(str) {
+            let res = []; //массив с результатом
+            let subStr = ''; //посторяющаяся подстрока
+            let numSub = str.length/(str.length-str.lastIndexOf(str[0])); // количество повторяющихся подстрок
+            let subLen = str.length/numSub; //длина повторяющейся подстроки
+            for (let i = 0; i < subLen; i++) {
+                subStr = subStr + str[i];
+            }
+            res = [subStr, numSub];
+            return(res);
+        }
+        sameSubstring('fdfdfdfd'); // рузльтат массив из ['fd', 4]
+        sameSubstring('xxxxxx'); // рузльтат массив из ['x', 6]
+        sameSubstring('xyzxyzxyz'); // рузльтат массив из ['xyz', 3]
+
+        // 7) Написать функцию которая перемножает числа от 5 до 10 через рекурсию!!!
+        function recursive(number) {
+            if (number == 10) {
+                return number;
+            }
+            return recursive(number + 1) * number;
+        }
+        recursive(5);
+
+        // 8) Написать функцию котороя принимает число и проверяет простое ли число, если да то возвращает true иначе false!!
+        function isPrime(num) {
+            let prime = true;
+            for (let i = 2; i <= 9; i++) {
+                if ((num%i == 0) && (num !== i) || (num == 2) || (num == 1)) {
+                    prime = false;
+                }
+            }
+            return(prime);
+        }
+        isPrime(7); // true
+        isPrime(6); // false
+        isPrime(9); // false
+
+        // Advanced Решить эту задачу другим способом!! То есть реверс главной и побочной!
+        //  1
+        let arr = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ];
+        let md = []; //главная диагональ
+        let pd = []; //побочная диагональ
+        let reverse = arr; //финальный массив
+        for (let i = 0; i < arr.length; i++) {
+            md[i] = arr[i][i];
+            pd[i] = arr[i][arr.length - 1 - i];
+        };
+        for (let i = 0; i < arr.length; i++) {
+            reverse[i][i] = md[arr.length - 1 - i];
+            reverse[i][arr.length - 1 - i] = pd[arr.length - 1 - i];
+        };
+        console.log(reverse);
+
+        // 2 Создать форму Имя, эмеил, пароль и кнопка send! По клику показать alert, что поля заполнены или наоборот!Можно двинутся дальше и реализовать pop-up а не alert!
+        function submitForm() {
+            let inputs = document.getElementsByClassName("form-input");
+            let alerts = [];
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs[i].value == '') {
+                    alerts[i] = inputs[i].name + ' is EMPTY';
+                } else {
+                    alerts[i] = inputs[i].name + ' is filled';
+                }
+            }
+            alert(alerts.join("   |   "));
+        }
+    </script>
+</body>
+
+</html>

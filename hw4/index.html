@@ -1,0 +1,214 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT HW3</title>
+</head>
+
+<body>
+    <script>
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Создать обьект car со следующими свойствами model - 'Mercedes', price - '60000', type - 'sedan', year - 2019, quantity - 4 
+        // Написать функцию которая будет принимать обьект вычитать 2 с поля quantity и возвращать price*quantity !!!
+        const car = {
+            model: 'Mercedes',
+            price: '60000',
+            type: 'sedan',
+            year: 2019,
+            quantity: 4
+        }
+        function getPrice(car) {
+            return(car.quantity * +car.price);
+        }
+
+
+        // 2) Записать в новую переменную только те обьекты у которых gender - m и age > 18
+        const dataExample = [{
+            name: 'John Doe',
+            gender: 'm',
+            age: 27,
+        }, {
+            name: 'Harvey Cox',
+            gender: 'm',
+            age: 16,
+        }, {
+            name: 'Nathan Dixon',
+            gender: 'm',
+            age: 23,
+        }, {
+            name: 'Lily Wyatt',
+            gender: 'f',
+            age: 28,
+        }, {
+            name: 'Morgan Lawson',
+            gender: 'm',
+            age: 50,
+        }, {
+            name: 'Lilly Blackburn',
+            gender: 'f',
+            age: 41,
+        }, {
+            name: 'Kate Sanderson',
+            gender: 'f',
+            age: 62,
+        }, {
+            name: 'Reece Howard',
+            gender: 'm',
+            age: 31,
+        }, {
+            name: 'Adam Doherty',
+            gender: 'm',
+            age: 52,
+        }, {
+            name: 'Eloise Wallace',
+            gender: 'f',
+            age: 24,
+        }, {
+            name: 'Luke Nolan',
+            gender: 'm',
+            age: 69,
+        }];
+
+        let adultMen = [];
+        for (let i = 0; i < dataExample.length; i++) {
+            if ((dataExample[i].gender === 'm') && (dataExample[i].age > 18)) {
+                adultMen[adultMen.length] = dataExample[i];
+            }
+        }
+
+        // 3) Написать фунцию которая принимает 2 параметра! 1 -  число которое будет умножаться на себя такое количество раз которое указано во втором параметре!
+        function mult(num, pow) {
+            if (pow == 1) {
+                return num;
+            }
+            return num * mult(num, pow - 1);
+        }
+
+        // 4) Написать функцию которая принимает 2 параметра from и to, и будет считать сумму  всех нечетных чисел и потом среднее арифметическое от этой суммы!
+        // Задачу решить 2-мя способами! Цыклами и рекурсией!
+
+        // 1 - рекурсия
+        let calc = function (from, to) {
+            let oddNum = 0; //количество нечетных чисел
+            let totalSum = 0; //сумма нечетных чисел
+            let sum = function (from, to) {
+                let odd = 0;
+                if (from > to) {
+                    return 0;
+                }
+                if (from%2 !== 0) {
+                    odd = from;
+                    oddNum = oddNum + 1
+                }
+                return odd + sum(from + 1, to);
+            }
+            totalSum = sum(from, to);
+            console.log('Sum is ' + totalSum);
+            console.log('Arifmetic mean is ' + totalSum +' / '+ oddNum + ' = ' + (totalSum / oddNum));
+        }
+        //2 - цикл
+        let calcCycle = function (from, to) {
+            let oddNum = 0; //количество нечетных чисел
+            let totalSum = 0; //сумма нечетных чисел
+            for (let i = from; i <= to; i++) {
+                if (i%2 !== 0) {
+                    totalSum = totalSum + i;
+                    oddNum = oddNum + 1;
+                }
+            }
+            console.log('Sum is ' + totalSum);
+            console.log('Arifmetic mean is ' + totalSum +' / '+ oddNum + ' = ' + (totalSum / oddNum));
+        }
+        calcCycle(1,4);
+
+        // 5) Написать поясниние как будет выполнятся в коллстэке следующий код!
+        function a() {
+            return b();
+        }
+
+        function b() {
+            return c();
+        }
+
+        function c() {
+            return d();
+        }
+        function d() {
+            return 'HELLO';
+        }
+        a();
+
+        //вызывается a() --> вызывается b() --> вызывается c()  --> вызывается d() --> закрывается d() {return 'HELLO'} --> закрывается c() {return 'HELLO'} --> закрывается b() {return 'HELLO'} --> закрывается a() {return 'HELLO'}
+ 
+
+        // 6) Есть переменные! Создать обьект используя эти переменные с ключами, имена которых являются значениями этих переменных!!
+        let var1 = "name";
+        let var2 = "lastName";
+        let var3 = "fullName";
+        let var4 = "age";
+
+        let obj = {};
+        obj[var1] = 'Vasia';
+        obj[var2] = 'Vasiliev';
+        obj[var3] = 'Vasia Vasiliev Vasilievych';
+        obj[var4] = 25;
+
+        // Advanced
+        // 7)  Используя  обьект который лежит в переменной impScreen отфильтровать массив в поле children по полю type
+        // чтобы остались только те у которых значение rich_text
+
+        const impScreen = {
+            name: "Impressum",
+            uuid: "0cc57361-9c7d-4f08-a6d9-c254f3516e7d",
+            content: {
+                component: "page",
+                children: [
+                    {
+                        type: "rich_text",
+                        data: {
+                            _uid: "f6c0525c-7b90-4b64-8166-de0524f53aec",
+                            content: "*Hello*, this is the **first** text!\n\nThis is a [link](https://google.com)",
+                            customClass: ""
+                        }
+                    },
+                    {
+                        type: "info_text",
+                        data: {
+                            _uid: "3fb42198-07d4-4820-90f5-08afe01b47c1",
+                            content: "Und hier kommt noch ein Absatz für Christian!",
+                            customClass: ""
+                        }
+                    },
+                    {
+                        type: "rich_text",
+                        data: {
+                            _uid: "3fb42198-07d4-4820-90f5-08afe01b47c1",
+                            content: "Absatz für Christian!",
+                            customClass: ""
+                        }
+                    },
+                    {
+                        type: "image",
+                        data: {
+                            _uid: "3fb42198-07d4-4820-90f5-08afe01b47c1",
+                            content: "Christian!",
+                            customClass: ""
+                        }
+                    }
+                ]
+            }
+        };
+
+        let childrenFiltered = [];
+        for (let i = 0; i < impScreen.content.children.length; i++) {
+            if (impScreen.content.children[i].type == 'rich_text') {
+                childrenFiltered[childrenFiltered.length] = impScreen.content.children[i];
+            }
+        }
+        impScreen.content.children = childrenFiltered;
+        impScreen;
+
+    </script>
+</body>
+
+</html>

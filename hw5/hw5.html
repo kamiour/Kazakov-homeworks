@@ -1,0 +1,110 @@
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <script>
+
+        // удалить из строки повторяющиеся символы
+        var first = '1234156117181119999';
+        let compare = first.split('');
+        let res = compare.filter(function(value, index) { 
+            return compare.indexOf(value) === index;
+        });
+        res;
+
+
+        // количество слов в строке
+        var second = 'Hi, i am learning javascript';
+        let compare = second.split(' ');
+        let res = compare.length;
+        res;
+
+
+        // самое длинное слово в строке
+        var third = 'Hi, i am learning javascript';
+        third = third.replace(/[\W_]+/g," ");
+        let array = third.split(' ');
+        array.sort(function(num1, num2){
+            return num2.length - num1.length;
+        })
+        res = array.sort(function(num1, num2){
+            return num2.length - num1.length;
+        })[0];
+        res;
+
+
+        // удалить пробелы в строке
+        var fourth = 'Hi, i am learning javascript';
+        let res = fourth.replace(/\s/g,'');
+        res;
+
+
+        // заменить пробелы на зяпятые
+        var fifth = 'Hi, i am learning javascript';
+        let res = fifth.replace(/\s/g,',');
+        res;
+
+
+        // Отфильтровать массив таким образом чтобы числа были не меньше 20 используя фильтр!
+        var sixth = [3, 42, 234, 5, 3, 21, 53];
+        let res = sixth.filter(function(current){
+            return current >= 20;
+        });
+        res;
+
+        // Вернуть новый массив из строк добавив слово месяц если к элементу если число больше 20 используя map
+        // [3, '42 месяца', '23 месяца', 5, 3, '21 месяца', '53 месяца']
+        var seventh = [3, 42, 23, 5, 3, 21, 53];
+        let res = seventh.map(function(current){
+            if (current > 20) return current + ' месяца';
+            else return current;
+        });
+        res;
+
+
+        // используя reduce просуммировать элементы которые больше 3
+        var eight = [3, 42, 23, 5, 3, 21, 53];
+        let res = eight.reduce(getSum, 0);
+        function getSum(total, num){
+            if (num > 3) return total + num;
+            else return total + 0;
+        };
+        res;
+
+
+        // Есть обьект car! пробежаться по обьекту через for in и подсчитать количество свойств в обьекте, 
+        const car = {
+            model: 'BMW',
+            price: 45000,
+            year: 2019,
+            country: 'Germany'
+        };
+        let res = 0;
+        for (let item in car) {
+            res++;
+        };
+        res;
+
+
+        // Написать функцию которая принимает только поле array обьекта person и сортирует по убыванию по id и возвращает массив!!
+        const person = {
+            name: 'Vasia',
+            gender: 'male',
+            array: [{ id: 1, name: 'Vasia' }, { id: 6, name: 'Boria' }, { id: 2, name: 'Petia' }, { id: 3, name: 'Misha' }]
+        };
+
+        function Sort(param) {
+            let sortedArr = param.array.sort(function(item1, item2){
+                return item2.id - item1.id;
+            })
+            return(sortedArr);
+        }
+        Sort(person);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+<body>
+    <script>
+        
+        // Тут не для новичков advanced! Нужно еще подобрать любую картинку для каждого языка прогр. и вставить в src!
+        // затем нужно вывести на html страницу картинки и под ними  name и description! 
+        // Блоки должны быть спозиционированы в ряд, если не хватает места то перенос на следующую!
+        // Блоки все должны быть одной ширины и высоты! 
+        const arr = [ 
+                {
+                    id: 1,
+                    name: 'Javascript',
+                    description: 'JavaScript, often abbreviated as JS, is a high-level, interpreted scripting language that conforms to the ECMAScript specification. JavaScript has curly-bracket syntax, dynamic typing, prototype-based object-orientation, and first-class functions.',
+                    src: 'images/1.jpg',
+                },
+                {
+                    id: 2,
+                    name: 'Python',
+                    description: 'Python is an interpreted, high-level, general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python\'s design philosophy emphasizes code readability with its notable use of significant whitespace.',
+                    src: 'images/2.jpg',
+                },
+                {
+                    id: 3,
+                    name: 'Php',
+                    description: 'PHP: Hypertext Preprocessor is a general-purpose programming language originally designed for web development. It was originally created by Rasmus Lerdorf in 1994; the PHP reference implementation is now produced by The PHP Group.',
+                    src: 'images/3.jpg',
+                },
+                {
+                    id: 4,
+                    name: 'Java',
+                    description: 'Java is a general-purpose programming language that is class-based, object-oriented, and designed to have as few implementation dependencies as possible',
+                    src: 'images/4.jpg',
+                },
+                {
+                    id: 5,
+                    name: 'C++',
+                    description: 'C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes',
+                    src: 'images/5.jpg',
+                }
+            ]
+            
+            
+            let main = document.createElement("main"); // создал flex-обертку <main> вокруг колонок с картинками/текстом
+            main.style.display = "flex"; //задал flex свойства
+            main.style.flexWrap = "wrap"; //сбрасывание на новую строку
+            document.body.appendChild(main); //присоединил обертку <main> к <body>
+
+
+            for (let i = 0; i < arr.length; i++) {
+                let div = document.createElement("div"); // создал внутренний блок с картинкой/текстом <div>, стилизовал его ниже
+                div.id = arr[i].id;
+                div.style.width = '200px';
+                div.style.height = '250px';
+                div.style.margin = '5px';
+                div.style.textAlign = 'center';
+                main.appendChild(div); //присоединил <div> к <main>, созданной выше
+
+                let img = document.createElement("img"); //создал <img> элемент
+                img.src = arr[i].src; //задал атрибуты <img> элемента, которые берутся из объекта array вверху 
+                img.alt = "not found";
+                img.width = "150";
+                img.height = "100";
+                div.appendChild(img); //присоединил <img> к <div>
+
+                let h1 = document.createElement("h1"); //создал <h1> элемент с именем name из array
+                h1.innerHTML = arr[i].name;
+                h1.style.fontSize = 14;
+                div.appendChild(h1);
+
+                let h2 = document.createElement("h2"); //создал <h2> элемент с именем name из array
+                h2.innerHTML = arr[i].description;
+                h2.style.fontSize = 11;
+                div.appendChild(h2);
+            }
+            
+    </script>
+</body>
+</html>
