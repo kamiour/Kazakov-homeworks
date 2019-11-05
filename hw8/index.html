@@ -182,8 +182,8 @@
             }, 
         }
 
-        car1.getSpeed1.bind(car2)();
-        car2.getSpeed2.bind(car1)();
+        car1.getSpeed1.call(car2);
+        car2.getSpeed2.call(car1);
 
 
         //10) Есть массив из обьектов нужно отфильтровать только те у которых цена больше 40000 и где model не равна Mercedes с помощью filter!
