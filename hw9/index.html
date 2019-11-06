@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT HW9</title>
+</head>
+
+<body>
+    <script>
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Есть участок кода! обернуть в try catch нужный участок кода и выбросить ошибку если getResult возвращает undefined
+        function getResult() {
+            var obj = {
+                name: 'Sergei',
+                lastName: 'Shakhov'
+            }
+            return
+            obj;
+        }
+        try {
+            const a = getResult();
+            if (!a) throw new Error(' | a is undefined')
+        }
+        catch (a) {
+            console.log('RESULT', a);
+        }
+        
+
+        //2) исправить код чтобы консоль логи показывали от 0 до 10, и написать почему сейчас выводит десять десяток!!
+        for (var i = 0; i < 10; i++) {
+            setTimeout(() => console.log(i), 0);
+        }
+        //^^ сейчас выводит, потому что цикл сразу попадает в callstack, а все setTimeout функции внутри цикла попадают в event queue и ждут очищения колстэка (окончания цикла). К моменту, когда колстэк очищен (цикл выполнен), i = 10. В этом момент из event queue функции попадают в колстэк и начинают выполняться
+
+        //правильный код с использованием самовызывающейся функции:
+        for (var i = 0; i < 10; i++) {
+            (function (i) {
+                setTimeout(() => console.log(i), 0);
+            }(i))
+        }
+        // или (так как нам нужно достичь моментального вызова функции), такое тоже подойдет:
+        for (var i = 0; i < 10; i++) {
+            setTimeout(console.log(i), 0);
+        }
+
+        // 3) Есть код!! В какой последовательности выполнится!
+        function getDatas() {
+            return [
+                {
+                    name: "Vasia"
+                },
+                {
+                    name: "Boria"
+                },
+                {
+                    name: "Misha"
+                },
+            ]
+        }
+        const res = getDatas();
+        console.log('RES', res);
+        setTimeout(console.log('settimeout1'), 100);
+        setTimeout(console.log('settimeout'), 10);
+        console.log('One');
+        console.log('two');
+
+        //последовательность такая: RES, settimeout1, settimeout, One, two
+        // если setTimeout(console.log('settimeout1'), 100) поменять на setTimeout(() => console.log('settimeout1'), 100), то последовательность будет такая: RES, One, two, settimeout, settimeout1
+
+
+        //4) Что выведет alert в setTimeOut
+        setTimeout(function () {
+            alert(i);
+        }, 100);
+
+        for (var i = 0; i < 1000000; i++) {
+        }
+        //так как var - не блочный, то i всплыло в глобальной области. В результате цикла i увеличился до 1000000. Все это время цикл был в колстэке, а alert в event queue. Как только цикл закончился (i = 1000000), выполнился alert и выдал 1000000
+
+
+        // 5) Есть функция funct! Сделать из нее функцию конструктор которая создает обьект со свойствами name lastName
+        function funct(name, lastName) {
+            this.name = name;
+            this.lastName = lastName;
+        }
+        let res = new funct('Petia', 'Vasiliev');
+
+
+        // 6) Создать функцию конструктор, которая принимает обьект и берет только lastName и position и создает обьект с этих свойств
+        function factory({lastName, position}) {
+            return {
+                lastName,
+                position,
+            };
+        }
+        new factory({ name: 'Sergei', lastName: 'Shakhov', height: 188, position: 'Software developer' });
+
+
+        // 7)  Создать функцию конструктор, которая принимает два свойства name, lastName конкатенирует их и сохраняет в замыкании в переменной fullName
+        // random свойства не будет в обьекте ОБРАТИТЕ ВНИМАНИЕ потому что есть return!! Если не было бы return то был бы обьект с одним свойством
+        function factory(name, lastname) {
+            var fullName;
+            fullName = `${name} ${lastname}`;
+            this.random = Math.random();
+
+            return {
+                name: 'ZINA Borisova',
+                getRealName: function() {
+                    return fullName;
+                }
+            };
+        }
+        let newObj = new factory('Petia', 'Vasiliev');
+        newObj.getRealName();
+
+
+        // 8) Есть код! Почему строчка с комментарием покажет {misha: NADUSHA}! Сделать так чтобы a.getObject(); вернул {misha: 'misha'}
+        // то есть должны быть независимые обьекты!!
+        function newFactory(obj) {
+            var object = obj;
+
+            return {
+                getObject: function() {
+                    return object;
+                }
+            };
+        }
+        var a = newFactory({misha: 'misha'});
+        var k = a.getObject();
+        k.misha = 'NADUSHA'; 
+        a.getObject(); // КОММЕНТАРИЙ!!! покажет NADUSHA 
+
+        // ^^ строчка с комментарием покажет {misha: NADUSHA} потому что k хранит свойство на объект. Исправляю деструктуризацией так:
+        function newFactory(obj) {
+            var object = obj;
+
+            return {
+                getObject: function() {
+                    return object;
+                }
+            };
+        }
+        var a = newFactory({misha: 'misha'});
+        var k = {...a.getObject()};
+        k.misha = 'NADUSHA'; 
+        a.getObject();
+
+    </script>
+</body>
+
+</html>
