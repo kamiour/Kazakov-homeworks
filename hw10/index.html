@@ -101,7 +101,7 @@
         Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
         Req.send();
 
-        //^^ возвращается объект с другим id (5d654f9a85e5b600177c89a6 вместо 5d4762e02481a600174fb1ae). У него пустой массив orderList, поэтому запрос на productId делать не получится. Пока сделал просто возвращение массива orderList (в данном случае пустой массив):
+        //реализую:
         function getOrderID() {
             return new Promise ((res, rej) => {
                 var Req = new XMLHttpRequest();
@@ -124,9 +124,21 @@
                 }
             })
         };
-        getOrderID().then(({_id: id}) => id)
-                    .then((id) => checkOrderID(id))
-                    .then(({orderList}) => console.log(orderList));
+        function checkProduct(productID) {
+            return new Promise ((res, rej) => {
+                var Req = new XMLHttpRequest();
+                Req.open("GET", `https://playwithpromise.herokuapp.com/api/order-system/product/${productID}`);
+                Req.send();
+                Req.onload = function () {
+                    if (!this.responseText) rej('BYE');
+                    res(JSON.parse(this.responseText));
+                }
+            })
+        };
+
+        getOrderID().then(({_id: id}) => checkOrderID(id))
+                    .then(({orderList}) => Promise.all([checkProduct(orderList[0].productId), checkProduct(orderList[1].productId)]))
+                    .then((products) => console.log("Products are: ", products));
         
     </script>
 </body>
