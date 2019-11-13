@@ -20,19 +20,16 @@
         let pr1 = new Promise ((res, rej) => {
             setTimeout(()=> res('1'), 1300);
         });
-        let pr2 = new Promise ((res, rej) => res('2'));
-        let pr3 = new Promise ((res, rej) => res('3'));
         let pr4 = new Promise ((res, rej) => {
             setTimeout(()=> res('4'), 300);
         });
-        let pr5 = new Promise ((res, rej) => res('5'));
 
         async function asyncFunc() {
             console.log(await pr1);
-            console.log(await pr2);
-            console.log(await pr3);
+            console.log('2');
+            console.log('3');
             console.log(await pr4);
-            console.log(await pr5);
+            console.log('5');
         }
         asyncFunc();
 
