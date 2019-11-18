@@ -63,6 +63,20 @@
                 });
         }
 
+        //переписываю ^^:
+        let uploadedImage ='_.jpg';
+        async function pickImage() {
+            let context = imagepicker.create({
+                mode: 'single'
+            });
+            await context.authorize();
+            let selection = await context.present();
+            selection.forEach((selected) => {
+                uploadedImage = selected;
+                cropImage();
+            });
+        }
+
         /**
          * Takes camera photo
          */
@@ -76,10 +90,18 @@
             });
         }
 
+        //переписываю^^:
+        async function takePhoto() {
+            await camera.requestPermissions();
+            let imageAsset = await camera.takePicture();
+            uploadedImage = imageAsset;
+            cropImage();
+        }
+
         /**
          * Crops picture
          */
-         function cropImage() {
+        function cropImage() {
             let source = new imageSource.ImageSource();
             source.fromAsset(this.uploadedImage).then(source => {
                 this.imageCropper
@@ -92,10 +114,20 @@
             });
         }
 
+        //переписываю^^:
+        function cropImage() {
+            let source = new imageSource.ImageSource();
+            let newSource = await source.fromAsset(this.uploadedImage);
+            let args = await this.imageCropper.show(newSource, cropOptions);
+            if (args.image !== null) {
+                savePictureToFile(args.image);
+            }
+        }
+
         /**
          * Crops picture
          */
-         function savePictureToFile(image) {
+        function savePictureToFile(image) {
             const folder = fs.knownFolders.documents();
             const path = fs.path.join(folder.path, "Temp" + Date.now() + ".png");
             const saved = image.saveToFile(path, "png");
@@ -104,6 +136,18 @@
                 this.pictureSelected.emit(path);
             }
         }
+
+        //переписываю^^:
+        function savePictureToFile(image) {
+            const folder = fs.knownFolders.documents();
+            const path = fs.path.join(folder.path, "Temp" + Date.now() + ".png");
+            const saved = image.saveToFile(path, "png");
+            if (saved) {
+                this.currentImage = image;
+                this.pictureSelected.emit(path);
+            }
+        }
+        //получается нечего переписывать
 
         function cropOptions() {
             return isAndroid ? {
@@ -114,8 +158,18 @@
                 };
         }
 
+        //переписываю^^:
+        function cropOptions() {
+            return isAndroid ? {
+                width: 512,
+                height: 512
+            } : {
+                    lockSquare: true
+                };
+        }
+        //тоже нечего переписывать
+
         pickImage()
-        // не понял задание
 
 
         // 4) И закрепляем промисы  
@@ -154,7 +208,23 @@
             // ваш код
             return array;
         }
-        // не понял задание, что должно происходить?
+
+        // реализация:
+        function push(array, element) {
+            array[array.length] = element;
+            return array;
+        }
+        push([1, 2], 3)
+
+        // или так:
+        Array.prototype.newPush = function(array) {
+            array.map((element) => {
+                this[this.length] = element;
+            });
+            return this;
+        }
+        let arr = [1, 2, 3];
+        arr.newPush([4, 5]);
 
     </script>
 </body>
