@@ -105,6 +105,18 @@
         }
         "111111asda222asda33".newSplit('asda');
 
+        Array.prototype.newJoin = function(separator) {
+            let resStr = `${this[0]}`;
+            console.log(resStr);
+            if (!separator) separator = ',';
+            for (let i = 1; i < this.length; i++) {
+                resStr = `${resStr}${separator}${this[i]}`;
+            }
+            return resStr;
+        }
+        let arr = [11, 25, 37];
+        [11, 25, 37].newJoin('-');
+
 
         // 5) Ну и на последок перепишем класс в вид самовыз функция которая возвращает функцию-конструктор
         class NewApp {
@@ -112,12 +124,20 @@
                 this.object = object;
             }
             getObject() {
-                return object;
+                return this.object;
             }
         }
+        let aa = new NewApp('value');
+        aa.getObject();
 
         //реализация:
-
+        let MyNewApp = (function() {
+            function MyNewApp(object) {
+                this.object = object;
+            }
+            return MyNewApp;
+        })();
+        let a = new MyNewApp('value');
         
     </script>
 </body>
