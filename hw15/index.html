@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+
+<body>
+    <script>
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Создать класс Building принимающий  параметр manufacturer,  и 2-х его наследников Restaurant, Hotel где эти 2 класса принимают еще один парамет Number of staff. 
+        // нужно подсчитать среднее арифметическое всех сотрудников
+        class Building {
+            constructor(manufacturer) {
+                this.manufacturer = manufacturer;
+            }
+            static getAverageStaffNumber(buildings) {
+                return buildings.reduce((prev, curr) => prev + curr.numberOfStaff, 0)/buildings.length;
+                //return totalStaffNumber/buildings.length;
+            }
+        }
+
+        class Restaurant extends Building {
+            constructor(manufacturer, numberOfStaff) {
+                super(manufacturer);
+                this.numberOfStaff = numberOfStaff;
+            }
+        }
+
+        class Hotel extends Building {
+            constructor(manufacturer, numberOfStaff) {
+                super(manufacturer);
+                this.numberOfStaff = numberOfStaff;
+            }
+        }
+
+        let yaposhka = new Restaurant('Yaposhka', 300);
+        let mafia = new Restaurant('Mafia', 200);
+        let palace = new Hotel('Palace Hotel', 600);
+        let kharkiv = new Hotel('Kharkiv', 400);
+        Building.getAverageStaffNumber([yaposhka, mafia, palace, kharkiv]);
+
+        
+        //2) Создать класс Builder со свойствами name, salary, workingHoursPerDay,и реализовать 2 класса со статическими 
+        // функциями, первый класс имеет функцию которая сортирует по salary и принимает массив из строителей, а второй находит сотрудника у которого самое большое workingHoursPerDay
+        class Builder {
+            constructor(name, salary, workingHoursPerDay) {
+                this.name = name;
+                this.salary = salary;
+                this.workingHoursPerDay = workingHoursPerDay;
+            }
+        }
+
+        class SortBySalary extends Builder {
+            constructor(name, salary, workingHoursPerDay) {
+                super(name, salary, workingHoursPerDay)
+            }
+            static sortBySalary(builders) {
+                return builders.sort((prev, curr) => prev.salary - curr.salary);
+            }
+        }
+
+        class FindMaxWorkingHours extends Builder {
+            constructor(name, salary, workingHoursPerDay) {
+                super(name, salary, workingHoursPerDay)
+            }
+            static findMaxWorkingHours(builders) {
+                //let arrayOfHours = builders.map((item) => item.workingHoursPerDay);
+                //return Math.max(...arrayOfHours);
+                return builders.sort((prev, curr) => curr.workingHoursPerDay - prev.workingHoursPerDay)[0];
+            }
+        }
+
+        let vasya = new Builder('Vasya', 500, 8);
+        let petya = new Builder('Patya', 400, 12);
+        let kolya = new Builder('Kolya', 600, 6);
+
+        SortBySalary.sortBySalary([vasya, petya, kolya])
+        FindMaxWorkingHours.findMaxWorkingHours([vasya, petya, kolya]);
+    
+
+        //3) Есть класс App! Который принимает массив с обьектов со свойствами name, country и нужно вернуть обьект с ключами которые являются значениями свойства country где будет массивы с name!
+        // как на уроке одним словом то есть так
+        //  
+        const res = {
+            'Ukraine':  ['VAsia', 'Petia', 'Boria'],
+            'USA': ['John', 'Ben']
+        }
+        const users = [
+            { name: 'VAsia', country: 'Ukraine'},
+            { name: 'Petia', country: 'Ukraine'},
+            { name: 'Boria', country: 'Ukraine'},
+            { name: 'Ben', country: 'USA'},
+            { name: 'John', country: 'USA'},
+        ]
+        class App {
+            constructor(arrayOfObjects) {
+                arrayOfObjects.forEach((item) => {
+                    if (!this[item.country]) {
+                        this[item.country] = [];
+                    }
+                    this[item.country].push(item.name);
+                });
+            }
+        }
+        let appUsers = new App(users);
+        appUsers;
+
+        
+    </script>
+</body>
+
+</html>
