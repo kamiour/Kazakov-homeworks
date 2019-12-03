@@ -65,16 +65,19 @@
 
         //переписываю ^^:
         let uploadedImage ='_.jpg';
+
         async function pickImage() {
             let context = imagepicker.create({
                 mode: 'single'
             });
-            await context.authorize();
-            let selection = await context.present();
-            selection.forEach((selected) => {
-                uploadedImage = selected;
-                cropImage();
-            });
+            let isAuthorized = await context.authorize();
+            if (isAuthorized) {
+                let selection = context.present();
+                selection.forEach((selected) => {
+                    uploadedImage = selected;
+                    await cropImage();
+                 });
+            }
         }
 
         /**
@@ -92,10 +95,16 @@
 
         //переписываю^^:
         async function takePhoto() {
-            await camera.requestPermissions();
-            let imageAsset = await camera.takePicture();
-            uploadedImage = imageAsset;
-            cropImage();
+            try {
+                await camera.requestPermissions();
+                let imageAsset = await camera.takePicture();
+                uploadedImage = imageAsset;
+                await cropImage();
+            }
+            catch(e) {
+                console.log(e);
+            }
+            
         }
 
         /**
@@ -136,18 +145,8 @@
                 this.pictureSelected.emit(path);
             }
         }
-
         //переписываю^^:
-        function savePictureToFile(image) {
-            const folder = fs.knownFolders.documents();
-            const path = fs.path.join(folder.path, "Temp" + Date.now() + ".png");
-            const saved = image.saveToFile(path, "png");
-            if (saved) {
-                this.currentImage = image;
-                this.pictureSelected.emit(path);
-            }
-        }
-        //получается нечего переписывать
+        //нечего переписывать
 
         function cropOptions() {
             return isAndroid ? {
@@ -157,19 +156,8 @@
                     lockSquare: true
                 };
         }
-
         //переписываю^^:
-        function cropOptions() {
-            return isAndroid ? {
-                width: 512,
-                height: 512
-            } : {
-                    lockSquare: true
-                };
-        }
         //тоже нечего переписывать
-
-        pickImage()
 
 
         // 4) И закрепляем промисы  
