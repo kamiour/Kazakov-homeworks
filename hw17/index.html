@@ -17,11 +17,33 @@
         }
         // И расширить серверную часть ниже добавить заголовки чтобы можно было отправить c любого домена и распарсить body и вернуть его!!
 
+        //расширенная серверная часть:
+        const http = require('http');
         http.createServer((req, res) => {
-            //  Н
-            res.end();
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Headers", "*");
+
+            let body = '';
+            req.on('data', (chunk) => {
+            body = String(chunk); //преобразуем в JSON
+            }).on('end', () => {
+            res.end(body); //отдаем JSON
+            })
         }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
-        
+
+        //Сам POST запрос:
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000');
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(obj));
+        xhr.onload = function() {
+        if (xhr.status == 200) {
+            console.log(JSON.parse(xhr.responseText)); //выводим в консоль браузера распарсенный объект
+        } else console.log('something is wrong')
+        };
+        // можно проверить из-под папки nodeJS1
+
+
         // 2) Отправить запрос исgользуя fetch или xmlhttprequest которой содержит query в url  
         // http://localhost:3000/phones?priceS=7000&priceF=40000&color=black - вот пример, где ?priceS=7000&priceF=40000&color=black -  query
         // где 7000 - 40000 - диапазон цен, то есть в query фильтр, диапазон 7000 - 40000  и цвет черный
@@ -36,7 +58,7 @@
                 color: 'black'
             },
             {
-                name: 'iphone8',ы
+                name: 'iphone8',
                 price: 18000,
                 color: 'white'
             },
@@ -72,7 +94,35 @@
             },
         ];
 
+        //серверная часть:
+        http.createServer((req, res) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            let requestURL = new URL(req.url, 'http://localhost:3000/');
+            if (requestURL.pathname === '/phones') {
+                let priceRangeStart = requestURL.searchParams.get('priceS');
+                let priceRangeStop = requestURL.searchParams.get('priceF');
+                let phoneColor = requestURL.searchParams.get('color');
+                let filteredPhones = phones.filter((item) => {
+                    if (item.price >= priceRangeStart && item.price <= priceRangeStop && item.color === phoneColor) {
+                        return item;
+                    }
+                })
+                res.end(JSON.stringify(filteredPhones));
+            } else {
+                res.end("Not requesting any phones now");
+            }    
+        }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
 
+        //сам GET запрос:
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/phones?priceS=7000&priceF=40000&color=black');
+        xhr.send();
+        xhr.onload = function() {
+        if (xhr.status == 200) { // analyze HTTP status of the response
+            console.log(JSON.parse(xhr.responseText));
+        } else console.log('something went wrong')
+        };
+        // можно проверить из-под папки nodeJS2
 
     </script>
 </body>
