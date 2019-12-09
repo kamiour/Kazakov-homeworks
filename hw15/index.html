@@ -52,22 +52,18 @@
         }
 
         class SortBySalary extends Builder {
-            constructor(name, salary, workingHoursPerDay) {
-                super(name, salary, workingHoursPerDay)
-            }
             static sortBySalary(builders) {
                 return builders.sort((prev, curr) => prev.salary - curr.salary);
             }
         }
 
         class FindMaxWorkingHours extends Builder {
-            constructor(name, salary, workingHoursPerDay) {
-                super(name, salary, workingHoursPerDay)
-            }
             static findMaxWorkingHours(builders) {
-                //let arrayOfHours = builders.map((item) => item.workingHoursPerDay);
-                //return Math.max(...arrayOfHours);
-                return builders.sort((prev, curr) => curr.workingHoursPerDay - prev.workingHoursPerDay)[0];
+                //return builders.sort((prev, curr) => curr.workingHoursPerDay - prev.workingHoursPerDay)[0];
+                return builders.reduce((prev, curr) => {
+                    if (curr.workingHoursPerDay > prev.workingHoursPerDay) prev = curr;
+                    return prev;
+                })
             }
         }
 
@@ -75,7 +71,7 @@
         let petya = new Builder('Patya', 400, 12);
         let kolya = new Builder('Kolya', 600, 6);
 
-        SortBySalary.sortBySalary([vasya, petya, kolya])
+        SortBySalary.sortBySalary([vasya, petya, kolya]);
         FindMaxWorkingHours.findMaxWorkingHours([vasya, petya, kolya]);
     
 
