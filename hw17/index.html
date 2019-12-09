@@ -31,7 +31,7 @@
             })
         }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
 
-        //Сам POST запрос:
+        //POST запрос через XMLHttpRequest:
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://localhost:3000');
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -41,6 +41,18 @@
             console.log(JSON.parse(xhr.responseText)); //выводим в консоль браузера распарсенный объект
         } else console.log('something is wrong')
         };
+
+        //POST запрос через fetch:
+        let response = await fetch('http://localhost:3000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(obj)
+          });
+        let result = await response.json();
+        console.log(result);
+
         // можно проверить из-под папки nodeJS1
 
 
