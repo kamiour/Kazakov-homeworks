@@ -113,7 +113,7 @@
             }    
         }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
 
-        //сам GET запрос:
+        //GET запрос через XMLHttpRequest:
         let xhr = new XMLHttpRequest();
         xhr.open('GET', 'http://localhost:3000/phones?priceS=7000&priceF=40000&color=black');
         xhr.send();
@@ -122,6 +122,16 @@
             console.log(JSON.parse(xhr.responseText));
         } else console.log('something went wrong')
         };
+
+        //GET запрос через fetch:
+        let response = await fetch('http://localhost:3000/phones?priceS=7000&priceF=40000&color=black');
+        if (response.ok) { // если HTTP-статус в диапазоне 200-299
+            let responseText = await response.json();
+            console.log(responseText);
+        } else {
+            console.log("Ошибка HTTP: " + response.status);
+        }
+
         // можно проверить из-под папки nodeJS2
 
     </script>
