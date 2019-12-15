@@ -43,15 +43,17 @@
         };
 
         //POST запрос через fetch:
-        let response = await fetch('http://localhost:3000', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(obj)
-          });
-        let result = await response.json();
-        console.log(result);
+        (async function() {
+            let response = await fetch('http://localhost:3000', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(obj)
+              });
+            let result = await response.json();
+            console.log(result);
+        })();
 
         // можно проверить из-под папки nodeJS1
 
@@ -136,14 +138,16 @@
         };
 
         //GET запрос через fetch:
-        let response = await fetch('http://localhost:3000/phones?priceS=7000&priceF=40000&color=black');
-        if (response.ok) { // если HTTP-статус в диапазоне 200-299
-            let responseText = await response.json();
-            console.log(responseText);
-        } else {
-            console.log("Ошибка HTTP: " + response.status);
-        }
-
+        (async function() {
+            let response = await fetch('http://localhost:3000/phones?priceS=7000&priceF=40000&color=black');
+            if (response.ok) { // если HTTP-статус в диапазоне 200-299
+                let responseText = await response.json();
+                console.log(responseText);
+            } else {
+                console.log("Ошибка HTTP: " + response.status);
+            }
+        })();
+        
         // можно проверить из-под папки nodeJS2
 
     </script>
