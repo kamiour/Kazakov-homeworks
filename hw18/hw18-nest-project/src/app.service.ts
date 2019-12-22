@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+
 let formula = { 
   "parameters": [
       {
@@ -104,12 +105,21 @@ export class AppService {
   }
 
   removeParametersObject(objId: number) {
-    const index = this.findParameterObject(objId);
+    const index = this.findParameterObjectIndex(objId);
     formula.parameters.splice(index, 1);
     return `removed object with this id: ${objId}`;
   }
 
-  private findParameterObject(id: number) {
+  //for advanced
+  forMathJS(arrayOfObjects): any {
+    let transformedObj = {};
+    arrayOfObjects.forEach((object) => {
+      transformedObj[formula.parameters[this.findParameterObjectIndex(object.id)].name] = object.value;
+    });
+    return [transformedObj, formula.formula];
+  }
+
+  private findParameterObjectIndex(id: number) {
     const objectIndex = formula.parameters.findIndex((obj) => obj.id == id);
     if (objectIndex === -1) {
       throw new NotFoundException('Could not find this object');

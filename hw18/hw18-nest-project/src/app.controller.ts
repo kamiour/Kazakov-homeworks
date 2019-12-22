@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
 import { AppService } from './app.service';
+import {evaluate} from 'mathjs';
 
 @Controller()
 export class AppController {
@@ -20,8 +21,16 @@ export class AppController {
     return this.appService.removeParametersObject(objectId);
   }
 
+  //default
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  //for advanced
+  @Post('mathjs')
+  mathjs(@Body() arrayOfObjects: object[]) {
+    const [o, formula] = this.appService.forMathJS(arrayOfObjects);
+    return evaluate(formula, o);
   }
 }
