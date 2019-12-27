@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AppFormula } from './app.inteface';
-import { AppParameters } from './app.inteface';
+import { AppFormula } from './app.interface';
+import { AppParameters } from './app.interface';
 
 let formula = { 
   "parameters": [

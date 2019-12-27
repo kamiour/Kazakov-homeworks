@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Delete, Put, Body, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AppFormula, QueryParams } from './app.inteface';
-import { AppParameters } from './app.inteface';
+import { AppFormula, QueryParams } from './app.interface';
+import { AppParameters } from './app.interface';
 
 
 @Controller('parameter')

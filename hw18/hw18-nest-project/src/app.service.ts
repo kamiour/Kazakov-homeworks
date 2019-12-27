@@ -1,4 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { AppFormula, BodyModel } from './app.interface';
+import { AppParameters } from './app.interface';
 
 let formula = { 
   "parameters": [
@@ -95,23 +97,23 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getFormula(): object {
+  getFormula(): AppFormula {
     return formula;
   }
 
-  addFormulaObject(object): any {
+  addFormulaObject(object): string {
     formula.parameters.push(object);
     return `added object with this id : ${object.id}`;
   }
 
-  removeParametersObject(objId: number) {
+  removeParametersObject(objId: number): string {
     const index = this.findParameterObjectIndex(objId);
     formula.parameters.splice(index, 1);
     return `removed object with this id: ${objId}`;
   }
 
   //for advanced
-  forMathJS(arrayOfObjects): any {
+  forMathJS(arrayOfObjects: BodyModel[]): any {
     let transformedObj = {};
     arrayOfObjects.forEach((object) => {
       transformedObj[formula.parameters[this.findParameterObjectIndex(object.id)].name] = object.value;
@@ -122,7 +124,7 @@ export class AppService {
   private findParameterObjectIndex(id: number) {
     const objectIndex = formula.parameters.findIndex((obj) => obj.id == id);
     if (objectIndex === -1) {
-      throw new NotFoundException('Could not find this object');
+      throw new NotFoundException(`Could not find this object: ${id}`);
     }
     return objectIndex;
   }
