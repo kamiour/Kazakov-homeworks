@@ -9,6 +9,7 @@ export class StudentService {
     @Inject('StudentModelToken') private readonly studentModel: Model<Student>,
     public testClass: TestClass,
   ){}
+  
   async createStudent(student: Student) {
     console.log(this.testClass.getVasia())
     return await this.studentModel.create(student);
