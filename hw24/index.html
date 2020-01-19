@@ -1,0 +1,115 @@
+<html>
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.5/math.min.js"></script>
+
+    <!--ОРИГИНАЛЬНЫЙ КОД-->
+    <!-- <script>
+        const parameters = new Map();
+        parameters.set('D', 10).set('W', 20).set('H', 23).set('T', 54);
+        const f1 = 'H+W';
+        const f2 = 'T+W';
+        const f3 = 'D*W';
+        const f4 = 'D*W*T';
+
+        function evaluate(params) {
+            const param1 = params[0];
+            const param2 = params[1];
+            const param3 = params[2];
+
+            if(param1 == 'H' && param2 === 'W') console.log(math.evaluate(f1, {H: parameters.get(param1), W: parameters.get(param2)}))
+            else if(param1 == 'T' && param2 === 'W') console.log(math.evaluate(f2, {T: parameters.get(param1), W: parameters.get(param2)}))
+            else if(param1 == 'D' && param2 === 'W' && param3 != "T") console.log(math.evaluate(f3, {D: parameters.get(param1), W: parameters.get(param2)}))
+            else if(param1 == 'D' && param2 === 'W' && param3 === 'T' ) console.log(math.evaluate(f4, {D: parameters.get(param1), W: parameters.get(param2), T: parameters.get(param3)}))
+        }
+
+        let arr = ['D', 'W', 'T'];
+        evaluate(arr);
+    </script> -->
+
+    <!--УЛУЧШЕННЫЙ КОД-->
+    <script>
+        const parameters = new Map();
+        parameters.set('D', 10).set('W', 20).set('H', 23).set('T', 54);
+
+        //class for custom error
+        class ParamError extends Error {
+            constructor(message) {
+                super(`Custom Error: Allowed symbols: 'H', 'W', 'D', 'T'. Please replace '${message}'`)
+            }
+        }
+
+
+        //class for formulas
+        class HplusW {
+            static mathEvaluate(args) {
+                const f = 'H+W';
+                const [param1, param2] = args;
+                console.log(f, math.evaluate(f, {H: parameters.get(param1), W: parameters.get(param2)}));
+            }
+
+            static criteria = 'HW';
+        }
+        class TplusW {
+            static mathEvaluate(args) {
+                const f = 'T+W';
+                const [param1, param2] = args;
+                console.log(f, math.evaluate(f, {T: parameters.get(param1), W: parameters.get(param2)}));
+            }
+
+            static criteria = 'TW'
+        }
+        class DtimesW {
+            static mathEvaluate(args) {
+                const f = 'D*W';
+                const [param1, param2] = args;
+                console.log(f, math.evaluate(f, {D: parameters.get(param1), W: parameters.get(param2)}));
+            }
+
+            static criteria = 'DW'
+        }
+        class DtimesWtimesT {
+            static mathEvaluate(args) {
+                const f = 'D*W*T';
+                const [param1, param2, param3] = args;
+                console.log(f, math.evaluate(f, {D: parameters.get(param1), W: parameters.get(param2), T: parameters.get(param3)}));
+            }
+            
+            static criteria = 'DWT'
+        }
+
+        function evaluate(params) {
+            let containsInvalidParam = false;
+
+            params.forEach(parameter => {
+                try {
+                    if (!Array.from(parameters.keys()).includes(parameter)) {
+                        containsInvalidParam = true;
+                        throw new ParamError(parameter);
+                    }
+                } catch(e) {
+                    console.log(e);
+                }
+            });
+
+            if (!containsInvalidParam) {
+                let arrayOfClasses = [HplusW, TplusW, DtimesW, DtimesWtimesT];
+                for (let currentClass of arrayOfClasses) {
+                    if (params.join('').substr(0, currentClass.criteria.length) === currentClass.criteria) {
+                        currentClass.mathEvaluate(params);
+                    }
+                }
+            }
+        }
+
+        //for checking
+        evaluate(['D', 'W']);
+        evaluate(['D', 'W', 'T']);
+        evaluate(['H', 'W']);
+        evaluate(['T', 'W']);
+        evaluate(['T', 'W', 'C']);
+    </script>
+</body>
+</html>
