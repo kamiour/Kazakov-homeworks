@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <script>
+
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Задача состоит в следующем! Делаем GET запрос https://playwithpromise.herokuapp.com/api/order-system получаем даные в виде массива
+        // Создаем разметку с помощью createElement и выводим список продуктов, а именно поля productImage, productName, description!(productImage - ссылка на картинку)
+
+        let container = createElement('div', 'container', document.body, null);
+        showProducts();
+
+        async function showProducts() {
+            let response = await fetch('https://playwithpromise.herokuapp.com/api/order-system');
+            let productsArray = await response.json();
+
+            productsArray.forEach(item => {
+                let row = createElement('div', 'row', container, null);
+                
+                createElement('div', 'col d-flex align-items-center border-right', row, item.productName);
+                createElement('div', 'col d-flex align-items-center border-right', row, item.productDescription);
+                createElement('div', 'col d-flex align-items-center border-right', row, `<img src="${item.productImage}" style="max-width: 100px; max-height: 100px;"></img>`);
+
+                createElement('hr', '', container, null)
+            })
+        }
+
+        function createElement(tagName, className, appendTo, innerHTML) {
+            let elem = document.createElement(tagName);
+            elem.className = className;
+            elem.innerHTML = innerHTML;
+            appendTo.append(elem);
+            return elem;
+        }
+
+    </script>
+</body>
+
+</html>
