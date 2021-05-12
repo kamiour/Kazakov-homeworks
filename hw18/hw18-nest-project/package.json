@@ -24,7 +24,7 @@
     "@nestjs/core": "^6.7.2",
     "@nestjs/platform-express": "^6.7.2",
     "@types/mathjs": "^6.0.2",
-    "mathjs": "^6.2.5",
+    "mathjs": "^7.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3"
